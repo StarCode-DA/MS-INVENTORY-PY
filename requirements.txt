@@ -1,0 +1,18 @@
+# Framework para construir APIs rápidas y modernas
+fastapi
+# Servidor ASGI para ejecutar la aplicación
+uvicorn
+# ORM para interactuar con la base de datos
+sqlalchemy
+# Driver para PostgreSQL
+psycopg2-binary
+# Librería para hashing (limitada por compatibilidad)
+bcrypt<4
+# Manejo de contraseñas con soporte bcrypt
+passlib[bcrypt]
+# Manejo de tokens JWT para autenticación
+python-jose[cryptography]
+# Carga de variables de entorno desde .env
+python-dotenv
+# Configuración del proyecto con Pydantic
+pydantic-settings
