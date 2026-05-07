@@ -20,6 +20,26 @@ def get_inventory(sede_id: int, db: Session = Depends(get_db)):
         Inventory.sede_id == sede_id,
     ).order_by(Inventory.id).all()
     return items
+# GET — detectar productos con stock bajo (algoritmo iterativo)
+@router.get("/low-stock")
+def get_low_stock(sede_id: int, threshold: float = 5, db: Session = Depends(get_db)):
+    items = db.query(Inventory).filter(
+        Inventory.sede_id == sede_id,
+        Inventory.activo == True
+    ).all()
+
+    low_stock_items = []
+    for item in items:           # Recorrido iterativo de todos los productos
+        if item.stock <= threshold:
+            low_stock_items.append(item)
+
+    return {
+        "sede_id": sede_id,
+        "threshold": threshold,
+        "total_reviewed": len(items),
+        "low_stock_count": len(low_stock_items),
+        "items": low_stock_items
+    }
 # POST — agregar producto al inventario de una sede
 @router.post("/")
 def create_inventory(data: InventoryCreate, db: Session = Depends(get_db)):
